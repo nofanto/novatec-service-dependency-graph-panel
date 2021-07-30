@@ -172,6 +172,29 @@ To build a release bundle:
 release-it [--no-git.requireCleanWorkingDir]
 ```
 
+## Create a release for private usage
+
+1. Obtain API-KEY for Publisher Role, see https://grafana.com/docs/grafana/latest/developers/plugins/sign-a-plugin/
+
+
+2. Adjust first part of the plugin ID matches the slug of your Grafana Cloud account.
+You can find the plugin ID in the plugin.json file inside your plugin directory. For example, if your account slug is acmecorp, you need to prefix the plugin ID with acmecorp-
+
+3. Clear folder build distribution, ```rm -rf dist```
+
+4. Do the build, ```yarn build```
+
+5. Sign the plugin with root url of your grafana instance
+```
+export GRAFANA_API_KEY=<YOUR_API_KEY>
+npx @grafana/toolkit plugin:sign --rootUrls https://example.com/grafana
+```
+
+6. make a zip of dist folder to create release, ```zip -r zip -r novatec-sdg-panel.zip dist```
+
+
+
+
 ### Found a bug? Have a question? Wanting to contribute?
 
 Feel free to open up an issue. We will take care of you and provide as much help as needed. Any suggestions/contributions are being very much appreciated.
