@@ -190,7 +190,7 @@ export GRAFANA_API_KEY=<YOUR_API_KEY>
 npx @grafana/toolkit plugin:sign --rootUrls https://example.com/grafana
 ```
 
-6. make a zip of dist folder to create release, ```zip -r zip -r novatec-sdg-panel.zip dist```
+6. make a zip of dist folder to create release, ```zip -r novatec-sdg-panel.zip dist```
 
 
 
