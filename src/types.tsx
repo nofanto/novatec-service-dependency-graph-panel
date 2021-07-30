@@ -97,6 +97,7 @@ export enum GraphDataType {
 export interface IntGraph {
   nodes: IntGraphNode[];
   edges: IntGraphEdge[];
+  independents: IntGraphEdge[];
 }
 
 export interface IntGraphNode {

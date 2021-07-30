@@ -205,6 +205,17 @@ class GraphGenerator {
     return edges.filter(isPresent);
   }
 
+  _createIndependents(data: GraphDataElement[]): IntGraphEdge[] {
+    const filteredData = _(data)
+      .filter(e => !!e.source)
+      .filter(e => e.source === e.target)
+      .filter(e => e.target !== null || e.source !== null)
+      .value();
+
+    const edges = _.map(filteredData, element => this._createEdge(element));
+    return edges.filter(isPresent);
+  }
+
   _filterData(graph: IntGraph): IntGraph {
     const { filterEmptyConnections: filterData } = this.controller.getSettings(true);
 
@@ -212,6 +223,7 @@ class GraphGenerator {
       const filteredGraph: IntGraph = {
         nodes: [],
         edges: [],
+        independents: [],
       };
 
       // filter empty connections
@@ -249,9 +261,12 @@ class GraphGenerator {
 
     const edges = this._createEdges(graphData);
 
+    const independents = this._createIndependents(graphData);
+
     const graph: IntGraph = {
       nodes,
       edges,
+      independents,
     };
 
     const filteredGraph = this._filterData(graph);
