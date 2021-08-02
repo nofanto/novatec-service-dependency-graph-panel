@@ -104,7 +104,8 @@ export class PanelController extends PureComponent<Props, PanelState> {
   processQueryData(data: DataFrame[]) {
     this.validQueryTypes = this.hasOnlyTableQueries(data);
     const graphData = this.preProcessor.processData(data);
-
+    console.log('processed data');
+    console.log(JSON.stringify(data));
     this.currentData = graphData;
   }
 
@@ -122,6 +123,8 @@ export class PanelController extends PureComponent<Props, PanelState> {
 
   processData() {
     var inputData: DataFrame[] = this.props.data.series;
+    console.log('panel data');
+    console.log(JSON.stringify(inputData));
     if (this.getSettings(true).dataMapping.showDummyData) {
       inputData = data;
     }

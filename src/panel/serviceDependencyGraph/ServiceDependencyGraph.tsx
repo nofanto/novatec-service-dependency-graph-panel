@@ -122,6 +122,7 @@ export class ServiceDependencyGraph extends PureComponent<PanelState, PanelState
   _updateGraph(graph: IntGraph) {
     const cyNodes = this._transformNodes(graph.nodes);
     const cyEdges = this._transformEdges(graph.edges);
+    const cyIndependents = this._transformIndependents(graph.independents);
 
     const nodes = this.state.cy.nodes().toArray();
     const updatedNodes = this._updateOrRemove(nodes, cyNodes);
@@ -134,6 +135,8 @@ export class ServiceDependencyGraph extends PureComponent<PanelState, PanelState
 
     // add new edges
     this.state.cy.add(cyEdges);
+
+    this.state.cy.add(cyIndependents);
 
     if (this.initResize) {
       this.initResize = false;
@@ -159,6 +162,23 @@ export class ServiceDependencyGraph extends PureComponent<PanelState, PanelState
           id: node.data.id,
           type: node.data.type,
           external_type: node.data.external_type,
+          metrics: {
+            ...node.data.metrics,
+          },
+        },
+      };
+      return result;
+    });
+
+    return cyNodes;
+  }
+
+  _transformIndependents(nodes: IntGraphEdge[]): ElementDefinition[] {
+    const cyNodes: ElementDefinition[] = _.map(nodes, node => {
+      const result: ElementDefinition = {
+        group: 'nodes',
+        data: {
+          id: node.data.source,
           metrics: {
             ...node.data.metrics,
           },

@@ -211,7 +211,8 @@ class GraphGenerator {
       .filter(e => e.source === e.target)
       .filter(e => e.target !== null || e.source !== null)
       .value();
-
+    console.log('independent data');
+    console.log(JSON.stringify(filteredData));
     const edges = _.map(filteredData, element => this._createEdge(element));
     return edges.filter(isPresent);
   }
@@ -250,6 +251,9 @@ class GraphGenerator {
         );
       });
 
+      filteredGraph.independents = _.filter(graph.independents, independent => _.size(independent.data.metrics) > 0);
+      console.log('filtered graph');
+      console.log(JSON.stringify(filteredGraph));
       return filteredGraph;
     } else {
       return graph;
